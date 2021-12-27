@@ -36,12 +36,12 @@ function start() {
     const currentTime = Date.now();
     const timeLeftMs = selectedTime.getTime() - currentTime;
     const timeLeft = convertMs(timeLeftMs);
-    
+
     refs.days.textContent = addLeadingZero(timeLeft.days);
     refs.hours.textContent = addLeadingZero(timeLeft.hours);
     refs.minutes.textContent = addLeadingZero(timeLeft.minutes);
     refs.seconds.textContent =addLeadingZero(timeLeft.seconds);
-    
+
     if (timeLeftMs < 1000) {
       //alert('Time is over. Enter new date.');
       clearInterval(intervalID);
