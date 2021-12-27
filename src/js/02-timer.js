@@ -1,14 +1,15 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
 const refs = {
-  input : document.querySelector('#datetime-picker'),
-  startBTN : document.querySelector('[data-start]'),
-  days : document.querySelector('[data-days]'),
-  hours : document.querySelector('[data-hours]'),
-  minutes : document.querySelector('[data-minutes]'),
-  seconds : document.querySelector('[data-seconds]'),
-}
+  input: document.querySelector('#datetime-picker'),
+  startBTN: document.querySelector('[data-start]'),
+  days: document.querySelector('[data-days]'),
+  hours: document.querySelector('[data-hours]'),
+  minutes: document.querySelector('[data-minutes]'),
+  seconds: document.querySelector('[data-seconds]'),
+};
 
 refs.startBTN.disabled = true;
 let selectedTime = 0;
@@ -23,13 +24,16 @@ const options = {
     const selectedDate = selectedDates[0].getTime();
     const currentDate = this.config.defaultDate.getTime();
     if (currentDate > selectedDate) {
-      alert('Please choose a date in the future');
+      Notiflix.Report.failure(
+        'Failure', 
+        'Please choose a date in the future.',
+        'Back to enter new date');
       return;
     }
     selectedTime = selectedDates[0];
     refs.startBTN.disabled = false;
-  }
-}
+  },
+};
 
 function start() {
   intervalID = setInterval(() => {
@@ -40,17 +44,18 @@ function start() {
     refs.days.textContent = addLeadingZero(timeLeft.days);
     refs.hours.textContent = addLeadingZero(timeLeft.hours);
     refs.minutes.textContent = addLeadingZero(timeLeft.minutes);
-    refs.seconds.textContent =addLeadingZero(timeLeft.seconds);
+    refs.seconds.textContent = addLeadingZero(timeLeft.seconds);
 
     if (timeLeftMs < 1000) {
-      //alert('Time is over. Enter new date.');
       clearInterval(intervalID);
+        Notiflix.Report.success(
+          'Success', 'Time is over. Enter new date.', 'Close', );
     }
   }, 1000);
 }
 
 flatpickr(refs.input, options);
-refs.startBTN.addEventListener('click', start)
+refs.startBTN.addEventListener('click', start);
 
 function convertMs(ms) {
   const second = 1000;
@@ -67,5 +72,5 @@ function convertMs(ms) {
 }
 
 function addLeadingZero(value) {
-  return String(value).padStart(2, "0");
+  return String(value).padStart(2, '0');
 }
