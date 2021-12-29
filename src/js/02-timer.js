@@ -48,6 +48,7 @@ function start() {
 
     if (timeLeftMs < 1000) {
       clearInterval(intervalID);
+        refs.startBTN.disabled = true;
         Notiflix.Report.success(
           'Success', 'Time is over. Enter new date.', 'Close', );
     }
