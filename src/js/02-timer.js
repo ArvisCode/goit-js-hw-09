@@ -52,6 +52,7 @@ function start() {
         Notiflix.Report.success(
           'Success', 'Time is over. Enter new date.', 'Close', );
     }
+
   }, 1000);
 }
 
@@ -75,3 +76,12 @@ function convertMs(ms) {
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
+
+(function lateStartBlock() {
+  let blockID = setInterval(() => {
+    const currentTime = Date.now();
+    if (currentTime > selectedTime) {
+      refs.startBTN.disabled = true;
+    }
+  }, 1000)
+})();
