@@ -36,6 +36,8 @@ const options = {
 };
 
 function start() {
+  refs.startBTN.disabled = true;
+
   intervalID = setInterval(() => {
     const currentTime = Date.now();
     const timeLeftMs = selectedTime.getTime() - currentTime;
@@ -48,7 +50,7 @@ function start() {
 
     if (timeLeftMs < 1000) {
       clearInterval(intervalID);
-        refs.startBTN.disabled = true;
+      intervalID = null;
         Notiflix.Report.success(
           'Success', 'Time is over. Enter new date.', 'Close', );
     }
